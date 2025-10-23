@@ -189,6 +189,7 @@ Follow the **[docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md)** for a step-by-step gui
 - **[Demo Script](docs/DEMO_SCRIPT.md)** - 60-minute live demonstration guide
 - **[Copilot Prompts](docs/COPILOT_PROMPTS.md)** - 50+ prompts for refactoring with GitHub Copilot
 - **[Architecture](docs/ARCHITECTURE.md)** - Detailed architecture documentation
+- **[Diagrams](docs/DIAGRAMS.md)** - Visual architecture diagrams and service flows
 - **[API Examples](docs/API_EXAMPLES.md)** - Comprehensive API testing guide
 - **[Project Summary](docs/PROJECT_SUMMARY.md)** - Technical overview
 - **[Presenter Checklist](docs/PRESENTER_CHECKLIST.md)** - Demo preparation checklist

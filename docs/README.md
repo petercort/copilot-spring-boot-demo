@@ -15,6 +15,7 @@ This directory contains all documentation for the E-Commerce Monolith to Microse
 
 ### Technical Documentation
 - **[Architecture](ARCHITECTURE.md)** - System architecture and design patterns
+- **[Diagrams](DIAGRAMS.md)** - Visual architecture diagrams and service communication flows
 - **[Project Summary](PROJECT_SUMMARY.md)** - Technical overview and component details
 - **[API Examples](API_EXAMPLES.md)** - Comprehensive API testing guide with curl examples
 
@@ -45,6 +46,7 @@ This directory contains all documentation for the E-Commerce Monolith to Microse
 | **PRESENTER_CHECKLIST.md** | Pre-demo preparation checklist | Presenters |
 | **COPILOT_PROMPTS.md** | Curated list of 50+ Copilot prompts | Developers, Presenters |
 | **ARCHITECTURE.md** | Detailed architecture documentation | Architects, Developers |
+| **DIAGRAMS.md** | Visual diagrams and communication flows | Everyone |
 | **PROJECT_SUMMARY.md** | Technical component overview | Developers |
 | **API_EXAMPLES.md** | REST API testing examples | Developers, Testers |
 
