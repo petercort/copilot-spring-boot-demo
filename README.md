@@ -220,7 +220,7 @@ This branch contains:
 - ✅ Build and startup automation scripts
 - ✅ Comprehensive documentation
 
-See **[COMPLETED_DEMO_GUIDE.md](COMPLETED_DEMO_GUIDE.md)** for details on using the reference implementation during demos or as a learning resource.
+See **[docs/COMPLETED_DEMO_GUIDE.md](docs/COMPLETED_DEMO_GUIDE.md)** for details on using the reference implementation during demos or as a learning resource.
 
 ### When to Use completed-demo Branch
 
