@@ -205,6 +205,30 @@ By completing this demo, you will learn how to:
 - ✅ Handle distributed transactions and data consistency
 - ✅ Test microservices independently and as a system
 
+## Completed Reference Implementation
+
+A **complete, working microservices implementation** is available on the `completed-demo` branch:
+
+```bash
+git checkout completed-demo
+```
+
+This branch contains:
+- ✅ Three fully independent microservices (Customer, Inventory, Order)
+- ✅ Database-per-service pattern implementation
+- ✅ REST-based inter-service communication
+- ✅ Build and startup automation scripts
+- ✅ Comprehensive documentation
+
+See **[COMPLETED_DEMO_GUIDE.md](COMPLETED_DEMO_GUIDE.md)** for details on using the reference implementation during demos or as a learning resource.
+
+### When to Use completed-demo Branch
+
+1. **During Live Demos** - As a safety net if issues arise
+2. **Customer Handoff** - Show the final working implementation
+3. **Learning** - Study the complete refactoring patterns
+4. **Troubleshooting** - Compare your implementation
+
 ## Next Steps
 
 After completing the basic refactoring, consider these advanced topics:
