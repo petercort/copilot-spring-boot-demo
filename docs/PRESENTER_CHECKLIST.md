@@ -23,7 +23,7 @@ Use this checklist to prepare for your microservices refactoring demonstration.
 - [ ] Sample data loads correctly (3 customers, 6 products)
 
 ### Documentation Review
-- [ ] Read README.md completely
+- [ ] Read [README.md](../README.md) completely
 - [ ] Review DEMO_SCRIPT.md (your presentation guide)
 - [ ] Familiarize yourself with COPILOT_PROMPTS.md
 - [ ] Review ARCHITECTURE.md to understand design decisions

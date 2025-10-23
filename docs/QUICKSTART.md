@@ -131,7 +131,7 @@ mvn clean install -DskipTests
 
 ## 6. Resources
 
-- Full documentation: **README.md**
+- Full documentation: **[README.md](../README.md)**
 - API examples: **API_EXAMPLES.md**
 - Demo script: **DEMO_SCRIPT.md**
 - Copilot prompts: **COPILOT_PROMPTS.md**

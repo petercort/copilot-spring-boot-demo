@@ -41,10 +41,19 @@ copilot-spring-boot-demo/
 │       └── controller/OrderController.java
 ├── src/main/resources/
 │   └── application.properties             # Application configuration
+├── docs/                                  # Documentation
+│   ├── QUICKSTART.md                      # Quick start guide
+│   ├── DEMO_SCRIPT.md                     # Step-by-step demo guide
+│   ├── COPILOT_PROMPTS.md                 # Sample Copilot prompts for refactoring
+│   ├── ARCHITECTURE.md                    # Architecture documentation
+│   ├── API_EXAMPLES.md                    # API testing examples
+│   ├── PROJECT_SUMMARY.md                 # Technical summary
+│   ├── PRESENTER_CHECKLIST.md             # Demo preparation checklist
+│   └── BUILD_NOTES.md                     # Build configuration notes
 ├── pom.xml                                # Maven dependencies
-├── README.md                              # This file
-├── DEMO_SCRIPT.md                         # Step-by-step demo guide
-└── COPILOT_PROMPTS.md                     # Sample Copilot prompts for refactoring
+├── build.sh                               # Build script (uses Java 17)
+├── run.sh                                 # Run script (uses Java 17)
+└── README.md                              # This file
 ```
 
 ## Prerequisites
@@ -167,16 +176,23 @@ Communication patterns to implement:
 
 ## Demo Flow
 
-Follow the **DEMO_SCRIPT.md** for a step-by-step guide on:
+Follow the **[docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md)** for a step-by-step guide on:
 1. Understanding the current monolithic architecture
 2. Identifying domain boundaries
 3. Using GitHub Copilot to extract microservices
 4. Implementing inter-service communication
 5. Testing the distributed system
 
-## Copilot Prompts
+## Documentation
 
-See **COPILOT_PROMPTS.md** for a curated list of Copilot prompts that will guide you through the refactoring process.
+- **[Quick Start Guide](docs/QUICKSTART.md)** - Get up and running quickly
+- **[Demo Script](docs/DEMO_SCRIPT.md)** - 60-minute live demonstration guide
+- **[Copilot Prompts](docs/COPILOT_PROMPTS.md)** - 50+ prompts for refactoring with GitHub Copilot
+- **[Architecture](docs/ARCHITECTURE.md)** - Detailed architecture documentation
+- **[API Examples](docs/API_EXAMPLES.md)** - Comprehensive API testing guide
+- **[Project Summary](docs/PROJECT_SUMMARY.md)** - Technical overview
+- **[Presenter Checklist](docs/PRESENTER_CHECKLIST.md)** - Demo preparation checklist
+- **[Build Notes](docs/BUILD_NOTES.md)** - Build configuration and troubleshooting
 
 ## Learning Objectives
 
