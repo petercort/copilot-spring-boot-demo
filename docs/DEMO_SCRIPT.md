@@ -168,7 +168,9 @@ Port should be 8081
 
    ```bash
    # From the customer-service directory
-   # Note: Using 'cp -a' which creates parent directories automatically
+   # Create package structure
+   mkdir -p src/main/java/com/fisglobal/customer/{model,repository,service,controller}
+   mkdir -p src/main/resources
    
    # Copy the customer domain files
    cp -a ../src/main/java/com/fisglobal/demo/customer/model/Customer.java \
@@ -224,11 +226,14 @@ Port should be 8081
 > "Now that we've done this once, let's see how Copilot can speed up creating the second service."
 
 **Demo Steps**:
-1. Copy inventory domain files:
+1. Create directory structure and copy inventory domain files:
    ```bash
    # From the inventory-service directory
-   # Note: Using 'cp -a' which creates parent directories automatically
+   # Create package structure
+   mkdir -p src/main/java/com/fisglobal/inventory/{model,repository,service,controller}
+   mkdir -p src/main/resources
    
+   # Copy inventory domain files
    cp -a ../src/main/java/com/fisglobal/demo/inventory/model/Product.java \
       src/main/java/com/fisglobal/inventory/model/
    
@@ -272,11 +277,14 @@ Create application.properties for port 8082 with database name inventorydb.
 > "The Order Service is more complex because it needs to communicate with both Customer and Inventory services. Let's use Copilot to help us implement REST-based communication."
 
 **Demo Steps**:
-1. Copy order domain files:
+1. Create directory structure and copy order domain files:
    ```bash
    # From the order-service directory
-   # Note: Using 'cp -a' which creates parent directories automatically
+   # Create package structure
+   mkdir -p src/main/java/com/fisglobal/order/{model,repository,service,controller,dto,client}
+   mkdir -p src/main/resources
    
+   # Copy order domain files
    cp -a ../src/main/java/com/fisglobal/demo/order/model/Order.java \
       src/main/java/com/fisglobal/order/model/
    
