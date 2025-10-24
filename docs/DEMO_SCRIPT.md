@@ -167,23 +167,20 @@ Port should be 8081
 1. Create the directory structure and copy files from monolith to customer-service:
 
    ```bash
-   # From the customer-service directory, create package structure
-   mkdir -p src/main/java/com/fisglobal/customer/model
-   mkdir -p src/main/java/com/fisglobal/customer/repository
-   mkdir -p src/main/java/com/fisglobal/customer/service
-   mkdir -p src/main/java/com/fisglobal/customer/controller
+   # From the customer-service directory
+   # Note: Using 'cp -a' which creates parent directories automatically
    
    # Copy the customer domain files
-   cp ../src/main/java/com/fisglobal/demo/customer/model/Customer.java \
+   cp -a ../src/main/java/com/fisglobal/demo/customer/model/Customer.java \
       src/main/java/com/fisglobal/customer/model/
    
-   cp ../src/main/java/com/fisglobal/demo/customer/repository/CustomerRepository.java \
+   cp -a ../src/main/java/com/fisglobal/demo/customer/repository/CustomerRepository.java \
       src/main/java/com/fisglobal/customer/repository/
    
-   cp ../src/main/java/com/fisglobal/demo/customer/service/CustomerService.java \
+   cp -a ../src/main/java/com/fisglobal/demo/customer/service/CustomerService.java \
       src/main/java/com/fisglobal/customer/service/
    
-   cp ../src/main/java/com/fisglobal/demo/customer/controller/CustomerController.java \
+   cp -a ../src/main/java/com/fisglobal/demo/customer/controller/CustomerController.java \
       src/main/java/com/fisglobal/customer/controller/
    ```
 
@@ -227,32 +224,25 @@ Port should be 8081
 > "Now that we've done this once, let's see how Copilot can speed up creating the second service."
 
 **Demo Steps**:
-1. Create directory structure:
-   ```bash
-   mkdir -p inventory-service/src/main/java/com/fisglobal/inventory/model
-   mkdir -p inventory-service/src/main/java/com/fisglobal/inventory/repository
-   mkdir -p inventory-service/src/main/java/com/fisglobal/inventory/service
-   mkdir -p inventory-service/src/main/java/com/fisglobal/inventory/controller
-   mkdir -p inventory-service/src/main/resources
-   ```
-
-2. Copy inventory domain files:
+1. Copy inventory domain files:
    ```bash
    # From the inventory-service directory
-   cp ../src/main/java/com/fisglobal/demo/inventory/model/Product.java \
+   # Note: Using 'cp -a' which creates parent directories automatically
+   
+   cp -a ../src/main/java/com/fisglobal/demo/inventory/model/Product.java \
       src/main/java/com/fisglobal/inventory/model/
    
-   cp ../src/main/java/com/fisglobal/demo/inventory/repository/ProductRepository.java \
+   cp -a ../src/main/java/com/fisglobal/demo/inventory/repository/ProductRepository.java \
       src/main/java/com/fisglobal/inventory/repository/
    
-   cp ../src/main/java/com/fisglobal/demo/inventory/service/ProductService.java \
+   cp -a ../src/main/java/com/fisglobal/demo/inventory/service/ProductService.java \
       src/main/java/com/fisglobal/inventory/service/
    
-   cp ../src/main/java/com/fisglobal/demo/inventory/controller/ProductController.java \
+   cp -a ../src/main/java/com/fisglobal/demo/inventory/controller/ProductController.java \
       src/main/java/com/fisglobal/inventory/controller/
    ```
 
-3. Use Copilot Chat to update package names and create supporting files:
+2. Use Copilot Chat to update package names and create supporting files:
 
 **Copilot Chat Prompt**:
 ```
@@ -282,43 +272,34 @@ Create application.properties for port 8082 with database name inventorydb.
 > "The Order Service is more complex because it needs to communicate with both Customer and Inventory services. Let's use Copilot to help us implement REST-based communication."
 
 **Demo Steps**:
-1. Create directory structure:
-   ```bash
-   mkdir -p order-service/src/main/java/com/fisglobal/order/model
-   mkdir -p order-service/src/main/java/com/fisglobal/order/repository
-   mkdir -p order-service/src/main/java/com/fisglobal/order/service
-   mkdir -p order-service/src/main/java/com/fisglobal/order/controller
-   mkdir -p order-service/src/main/java/com/fisglobal/order/dto
-   mkdir -p order-service/src/main/java/com/fisglobal/order/client
-   mkdir -p order-service/src/main/resources
-   ```
-
-2. Copy order domain files:
+1. Copy order domain files:
    ```bash
    # From the order-service directory
-   cp ../src/main/java/com/fisglobal/demo/order/model/Order.java \
+   # Note: Using 'cp -a' which creates parent directories automatically
+   
+   cp -a ../src/main/java/com/fisglobal/demo/order/model/Order.java \
       src/main/java/com/fisglobal/order/model/
    
-   cp ../src/main/java/com/fisglobal/demo/order/model/OrderItem.java \
+   cp -a ../src/main/java/com/fisglobal/demo/order/model/OrderItem.java \
       src/main/java/com/fisglobal/order/model/
    
-   cp ../src/main/java/com/fisglobal/demo/order/repository/OrderRepository.java \
+   cp -a ../src/main/java/com/fisglobal/demo/order/repository/OrderRepository.java \
       src/main/java/com/fisglobal/order/repository/
    
-   cp ../src/main/java/com/fisglobal/demo/order/service/OrderService.java \
+   cp -a ../src/main/java/com/fisglobal/demo/order/service/OrderService.java \
       src/main/java/com/fisglobal/order/service/
    
-   cp ../src/main/java/com/fisglobal/demo/order/controller/OrderController.java \
+   cp -a ../src/main/java/com/fisglobal/demo/order/controller/OrderController.java \
       src/main/java/com/fisglobal/order/controller/
    
-   cp ../src/main/java/com/fisglobal/demo/order/dto/CreateOrderRequest.java \
+   cp -a ../src/main/java/com/fisglobal/demo/order/dto/CreateOrderRequest.java \
       src/main/java/com/fisglobal/order/dto/
    
-   cp ../src/main/java/com/fisglobal/demo/order/dto/OrderItemRequest.java \
+   cp -a ../src/main/java/com/fisglobal/demo/order/dto/OrderItemRequest.java \
       src/main/java/com/fisglobal/order/dto/
    ```
 
-3. Use Copilot to update package names:
+2. Use Copilot to update package names:
    - Use Copilot Chat: "Update all package names from com.fisglobal.demo.order to com.fisglobal.order"
 
 ### 5.2 Use Copilot to Create REST Clients
