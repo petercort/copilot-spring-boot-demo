@@ -50,6 +50,7 @@ logs/
 *.tmp
 *.swp
 *~
+*.orig
 
 # H2 Database files
 *.db
