@@ -5,6 +5,30 @@ Add JUnit 5 + Mockito unit tests for every testable class in customer-service, i
 
 ---
 
+## Phase Dependency Overview
+
+```
+Phase 1 ── Test Infrastructure
+    │
+    ├── Phase 2 ── customer-service tests ──┐
+    ├── Phase 3 ── inventory-service tests ──┤── Phase 6 ── Verification
+    ├── Phase 4 ── order-service tests ──────┤
+    └── Phase 5 ── Gateway + Eureka smoke ───┘
+```
+
+| Phase | Description | Depends On | Parallel With |
+|-------|-------------|------------|---------------|
+| **1** | Test Infrastructure — JaCoCo in parent POM | — *(start here)* | — |
+| **2** | customer-service tests (service, controller, entity) | Phase 1 | Phases 3, 4, 5 |
+| **3** | inventory-service tests (service, controller, entity) | Phase 1 | Phases 2, 4, 5 |
+| **4** | order-service tests (service, controller, adapters, entities) | Phase 1 | Phases 2, 3, 5 |
+| **5** | api-gateway + eureka-server smoke tests | Phase 1 | Phases 2, 3, 4 |
+| **6** | Verification — `mvn verify` + JaCoCo coverage gate | Phases 2, 3, 4, 5 | — |
+
+> Phases 2–5 are fully independent once Phase 1 is complete and can be implemented concurrently.
+
+---
+
 ## Phase 1 — Test Infrastructure (blocks all other phases)
 
 **Step 1.** Add JaCoCo to parent `pom.xml`:
