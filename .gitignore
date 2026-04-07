@@ -75,10 +75,7 @@ logs/
 # Spring Boot
 spring.log
 
-# Microservices directories (only on completed-demo branch)
-customer-service/
-inventory-service/
-order-service/
+# Microservices helper scripts (not part of Maven build)
 build-all-services.sh
 start-all-services.sh
 stop-all-services.sh
