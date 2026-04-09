@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce Demo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+    header { background: #2c3e50; color: white; padding: 16px 24px; }
+    header h1 { font-size: 1.4rem; }
+    nav { background: #34495e; padding: 0 24px; display: flex; gap: 4px; }
+    nav button {
+      background: none; border: none; color: #ccc; padding: 12px 16px;
+      cursor: pointer; font-size: 0.95rem; border-bottom: 3px solid transparent;
+    }
+    nav button:hover { color: white; }
+    nav button.active { color: white; border-bottom-color: #3498db; }
+    .tab-content { padding: 24px; display: none; }
+    .tab-content.active { display: block; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    th { background: #2c3e50; color: white; padding: 10px 14px; text-align: left; }
+    td { padding: 10px 14px; border-bottom: 1px solid #eee; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f9f9f9; }
+    .loading { padding: 20px; color: #888; }
+    .error { background: #fde8e8; color: #c0392b; padding: 12px 16px; border-radius: 4px; margin-bottom: 12px; border: 1px solid #f5c6cb; }
+    form { background: white; padding: 24px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); max-width: 600px; }
+    label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 0.9rem; }
+    select, input { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 16px; font-size: 0.95rem; }
+    .product-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .product-row select { flex: 2; margin-bottom: 0; }
+    .product-row input { flex: 1; margin-bottom: 0; }
+    .product-row button { padding: 8px 12px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    #add-product-btn { background: #27ae60; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; margin-bottom: 16px; }
+    #add-product-btn:hover { background: #219d55; }
+    button[data-testid="submit-order"] { background: #3498db; color: white; border: none; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+    button[data-testid="submit-order"]:hover { background: #2980b9; }
+    .success { background: #d4edda; color: #155724; padding: 12px 16px; border-radius: 4px; margin-top: 16px; border: 1px solid #c3e6cb; }
+    h2 { margin-bottom: 16px; font-size: 1.2rem; color: #2c3e50; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>E-Commerce Microservices Demo</h1>
+  </header>
+  <nav>
+    <button data-testid="nav-customers" onclick="showTab('customers')">Customers</button>
+    <button data-testid="nav-products" onclick="showTab('products')">Products</button>
+    <button data-testid="nav-orders" onclick="showTab('orders')">Orders</button>
+    <button data-testid="nav-create-order" onclick="showTab('create-order')">Create Order</button>
+  </nav>
+
+  <!-- Customers Tab -->
+  <div id="tab-customers" class="tab-content">
+    <h2>Customers</h2>
+    <div id="customers-error" class="error" style="display:none;"></div>
+    <div id="customers-loading" class="loading">Loading...</div>
+    <table data-testid="customers-table" id="customers-table" style="display:none;">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th></tr>
+      </thead>
+      <tbody id="customers-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Products Tab -->
+  <div id="tab-products" class="tab-content">
+    <h2>Products</h2>
+    <div id="products-error" class="error" style="display:none;"></div>
+    <div id="products-loading" class="loading">Loading...</div>
+    <table data-testid="products-table" id="products-table" style="display:none;">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th></tr>
+      </thead>
+      <tbody id="products-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Orders Tab -->
+  <div id="tab-orders" class="tab-content">
+    <h2>Orders</h2>
+    <div id="orders-error" class="error" style="display:none;"></div>
+    <div id="orders-loading" class="loading">Loading...</div>
+    <table data-testid="orders-table" id="orders-table" style="display:none;">
+      <thead>
+        <tr><th>ID</th><th>Customer ID</th><th>Status</th><th>Total</th></tr>
+      </thead>
+      <tbody id="orders-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Create Order Tab -->
+  <div id="tab-create-order" class="tab-content">
+    <h2>Create Order</h2>
+    <form data-testid="create-order-form" id="create-order-form" onsubmit="submitOrder(event)">
+      <label for="customer-select">Customer</label>
+      <select data-testid="customer-select" id="customer-select" required>
+        <option value="">-- Select Customer --</option>
+      </select>
+
+      <label>Products</label>
+      <div id="product-rows"></div>
+      <button type="button" id="add-product-btn" onclick="addProductRow()">+ Add Product</button>
+
+      <label for="shipping-address">Shipping Address</label>
+      <input type="text" id="shipping-address" placeholder="123 Main St" required />
+
+      <label for="shipping-city">City</label>
+      <input type="text" id="shipping-city" placeholder="New York" required />
+
+      <label for="shipping-state">State</label>
+      <input type="text" id="shipping-state" placeholder="NY" required />
+
+      <label for="shipping-zip">ZIP</label>
+      <input type="text" id="shipping-zip" placeholder="10001" required />
+
+      <label for="shipping-country">Country</label>
+      <input type="text" id="shipping-country" placeholder="USA" value="USA" required />
+
+      <button type="submit" data-testid="submit-order">Place Order</button>
+
+      <div data-testid="order-success" id="order-success" class="success" style="display:none;"></div>
+      <div data-testid="order-error" id="order-error" class="error" style="display:none;"></div>
+    </form>
+  </div>
+
+  <script>
+    const API = '';
+    let allProducts = [];
+
+    function showTab(name) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      document.querySelector(`[data-testid="nav-${name}"]`).classList.add('active');
+
+      if (name === 'customers') loadCustomers();
+      else if (name === 'products') loadProducts();
+      else if (name === 'orders') loadOrders();
+      else if (name === 'create-order') loadCreateOrderForm();
+    }
+
+    async function loadCustomers() {
+      const loading = document.getElementById('customers-loading');
+      const table = document.getElementById('customers-table');
+      const errorEl = document.getElementById('customers-error');
+      const tbody = document.getElementById('customers-body');
+
+      loading.style.display = 'block';
+      table.style.display = 'none';
+      errorEl.style.display = 'none';
+
+      try {
+        const res = await fetch(`${API}/api/customers`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        tbody.innerHTML = data.map(c => `
+          <tr data-id="${c.id}">
+            <td>${c.id}</td>
+            <td>${c.firstName} ${c.lastName}</td>
+            <td>${c.email}</td>
+          </tr>`).join('');
+        loading.style.display = 'none';
+        table.style.display = 'table';
+      } catch (e) {
+        loading.style.display = 'none';
+        errorEl.textContent = `Failed to load customers: ${e.message}`;
+        errorEl.style.display = 'block';
+      }
+    }
+
+    async function loadProducts() {
+      const loading = document.getElementById('products-loading');
+      const table = document.getElementById('products-table');
+      const errorEl = document.getElementById('products-error');
+      const tbody = document.getElementById('products-body');
+
+      loading.style.display = 'block';
+      table.style.display = 'none';
+      errorEl.style.display = 'none';
+
+      try {
+        const res = await fetch(`${API}/api/products`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        allProducts = data;
+        tbody.innerHTML = data.map(p => `
+          <tr data-id="${p.id}">
+            <td>${p.id}</td>
+            <td>${p.name}</td>
+            <td>$${p.price.toFixed(2)}</td>
+            <td>${p.stockQuantity}</td>
+          </tr>`).join('');
+        loading.style.display = 'none';
+        table.style.display = 'table';
+      } catch (e) {
+        loading.style.display = 'none';
+        errorEl.textContent = `Failed to load products: ${e.message}`;
+        errorEl.style.display = 'block';
+      }
+    }
+
+    async function loadOrders() {
+      const loading = document.getElementById('orders-loading');
+      const table = document.getElementById('orders-table');
+      const errorEl = document.getElementById('orders-error');
+      const tbody = document.getElementById('orders-body');
+
+      loading.style.display = 'block';
+      table.style.display = 'none';
+      errorEl.style.display = 'none';
+
+      try {
+        const res = await fetch(`${API}/api/orders`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        tbody.innerHTML = data.length === 0
+          ? '<tr><td colspan="4" style="text-align:center;color:#888;">No orders yet</td></tr>'
+          : data.map(o => `
+              <tr data-id="${o.id}">
+                <td>${o.id}</td>
+                <td>${o.customerId}</td>
+                <td>${o.status}</td>
+                <td>$${(o.totalAmount || 0).toFixed(2)}</td>
+              </tr>`).join('');
+        loading.style.display = 'none';
+        table.style.display = 'table';
+      } catch (e) {
+        loading.style.display = 'none';
+        errorEl.textContent = `Failed to load orders: ${e.message}`;
+        errorEl.style.display = 'block';
+      }
+    }
+
+    async function loadCreateOrderForm() {
+      const select = document.getElementById('customer-select');
+      if (select.options.length <= 1) {
+        try {
+          const res = await fetch(`${API}/api/customers`);
+          const customers = await res.json();
+          customers.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = `${c.firstName} ${c.lastName} (${c.email})`;
+            select.appendChild(opt);
+          });
+        } catch (e) {
+          console.error('Failed to load customers for form:', e);
+        }
+      }
+      if (allProducts.length === 0) {
+        try {
+          const res = await fetch(`${API}/api/products`);
+          allProducts = await res.json();
+        } catch (e) {
+          console.error('Failed to load products for form:', e);
+        }
+      }
+      if (document.getElementById('product-rows').children.length === 0) {
+        addProductRow();
+      }
+    }
+
+    function addProductRow() {
+      const container = document.getElementById('product-rows');
+      const row = document.createElement('div');
+      row.className = 'product-row';
+      const productSelect = document.createElement('select');
+      productSelect.className = 'product-select';
+      productSelect.innerHTML = '<option value="">-- Product --</option>' +
+        allProducts.map(p => {
+          const outOfStock = !p.inStock;
+          const label = outOfStock
+            ? `${p.name} ($${p.price.toFixed(2)}) — Out of Stock`
+            : `${p.name} ($${p.price.toFixed(2)})`;
+          return `<option value="${p.id}" ${outOfStock ? 'disabled' : ''}>${label}</option>`;
+        }).join('');
+      const qtyInput = document.createElement('input');
+      qtyInput.type = 'number';
+      qtyInput.min = '1';
+      qtyInput.value = '1';
+      qtyInput.className = 'product-qty';
+      qtyInput.placeholder = 'Qty';
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.textContent = '✕';
+      removeBtn.onclick = () => container.removeChild(row);
+      row.appendChild(productSelect);
+      row.appendChild(qtyInput);
+      row.appendChild(removeBtn);
+      container.appendChild(row);
+    }
+
+    async function submitOrder(e) {
+      e.preventDefault();
+      const successEl = document.getElementById('order-success');
+      const errorEl = document.getElementById('order-error');
+      successEl.style.display = 'none';
+      errorEl.style.display = 'none';
+
+      const customerId = parseInt(document.getElementById('customer-select').value);
+      const rows = document.querySelectorAll('#product-rows .product-row');
+      const items = [];
+      for (const row of rows) {
+        const pid = parseInt(row.querySelector('.product-select').value);
+        const qty = parseInt(row.querySelector('.product-qty').value);
+        if (pid && qty > 0) items.push({ productId: pid, quantity: qty });
+      }
+
+      if (!customerId) { errorEl.textContent = 'Please select a customer.'; errorEl.style.display = 'block'; return; }
+      if (items.length === 0) { errorEl.textContent = 'Please add at least one product.'; errorEl.style.display = 'block'; return; }
+
+      const payload = {
+        customerId,
+        items,
+        shippingAddress: document.getElementById('shipping-address').value,
+        shippingCity: document.getElementById('shipping-city').value,
+        shippingState: document.getElementById('shipping-state').value,
+        shippingZip: document.getElementById('shipping-zip').value,
+        shippingCountry: document.getElementById('shipping-country').value,
+      };
+
+      try {
+        const res = await fetch(`${API}/api/orders`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const msg = await res.text();
+          throw new Error(`HTTP ${res.status}: ${msg}`);
+        }
+        const order = await res.json();
+        successEl.textContent = `Order #${order.id} created successfully! Status: ${order.status}`;
+        successEl.style.display = 'block';
+        e.target.reset();
+        document.getElementById('product-rows').innerHTML = '';
+        addProductRow();
+      } catch (err) {
+        errorEl.textContent = `Failed to create order: ${err.message}`;
+        errorEl.style.display = 'block';
+      }
+    }
+
+    // Load customers tab by default
+    showTab('customers');
+  </script>
+</body>
+</html>
