@@ -80,3 +80,6 @@ build-all-services.sh
 start-all-services.sh
 stop-all-services.sh
 .service-pids
+
+
+results/
