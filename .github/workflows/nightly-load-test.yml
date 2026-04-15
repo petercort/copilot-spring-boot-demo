@@ -1,0 +1,39 @@
+name: Nightly Load Test
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 2 AM UTC daily
+  workflow_dispatch:
+
+jobs:
+  smoke-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Build
+        run: ./build.sh
+      - name: Start services
+        run: ./run.sh &
+      - name: Wait for services
+        run: sleep 70
+      - name: Install k6
+        run: |
+          curl https://github.com/grafana/k6/releases/download/v0.52.0/k6-v0.52.0-linux-amd64.tar.gz -L | tar xvz --strip-components 1
+          sudo mv k6 /usr/local/bin/k6
+      - name: Run smoke test
+        working-directory: load-tests
+        run: k6 run k6/smoke.js
+      - name: Run baseline test
+        working-directory: load-tests
+        run: k6 run --out json=results/baseline-${{ github.run_id }}.json k6/baseline.js
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: load-test-results-${{ github.run_id }}
+          path: load-tests/results/
