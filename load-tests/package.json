@@ -1,0 +1,18 @@
+{
+  "name": "ecommerce-load-tests",
+  "version": "1.0.0",
+  "description": "k6 load tests for FIS Global e-commerce microservices",
+  "scripts": {
+    "smoke":     "k6 run k6/smoke.js",
+    "baseline":  "k6 run k6/baseline.js",
+    "ramp-up":   "k6 run k6/ramp-up.js",
+    "stress":    "k6 run k6/stress.js",
+    "spike":     "k6 run k6/spike.js",
+    "soak":      "k6 run k6/soak.js",
+    "order-flow":"k6 run k6/order-flow.js",
+    "vt-bench":  "k6 run k6/virtual-threads-benchmark.js"
+  },
+  "devDependencies": {
+    "@types/k6": "^0.54.0"
+  }
+}

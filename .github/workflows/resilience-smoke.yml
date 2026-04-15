@@ -1,0 +1,25 @@
+name: Resilience Smoke Test
+
+on:
+  pull_request:
+    paths:
+      - 'order-service/**'
+      - 'api-gateway/**'
+
+jobs:
+  resilience-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Build
+        run: ./build.sh
+      - name: Start services
+        run: ./run.sh &
+      - name: Wait for services
+        run: sleep 60
+      - name: Verify steady state
+        run: bash scripts/verify-steady-state.sh

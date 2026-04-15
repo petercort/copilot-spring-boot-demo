@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * HTTP semantics are wrapped by {@link InventoryServiceClientAdapter}, which
  * implements {@link com.fisglobal.order.port.InventoryServicePort}.
  */
-@FeignClient(name = "inventory-service", path = "/api/products")
+@FeignClient(name = "inventory-service", path = "/api/products", fallback = InventoryServiceClientFallback.class)
 public interface InventoryServiceClient {
 
     @GetMapping("/{id}")

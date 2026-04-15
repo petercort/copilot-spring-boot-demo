@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: chaos-dashboards
+    folder: Chaos Testing
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

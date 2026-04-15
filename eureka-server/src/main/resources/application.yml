@@ -19,3 +19,12 @@ logging:
     com.fisglobal.eureka: INFO
     com.netflix.eureka: WARN
     com.netflix.discovery: WARN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always

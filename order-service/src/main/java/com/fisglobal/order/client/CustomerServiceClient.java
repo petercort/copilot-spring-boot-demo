@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * {@link com.fisglobal.order.port.CustomerServicePort} and wraps this interface to provide
  * Optional semantics and translate 404 responses gracefully.
  */
-@FeignClient(name = "customer-service", path = "/api/customers")
+@FeignClient(name = "customer-service", path = "/api/customers", fallback = CustomerServiceClientFallback.class)
 public interface CustomerServiceClient {
 
     @GetMapping("/{id}")
